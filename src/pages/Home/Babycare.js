@@ -1,8 +1,11 @@
 import React from 'react';
 import treatment from '../../assets/images/treatment.png'
+import chair from '../../assets/images/chair.png'
 const Babycare = () => {
-    return (
-        <div className="hero min-h-screen">
+    
+  return (
+        <div className="hero min-h-screen" 
+      >
         <div className="hero-content flex-col lg:flex-row px-20">
           <img src={treatment} className="max-w-sm rounded-lg shadow-2xl" />
           <div>

@@ -6,10 +6,10 @@ import Babycare from './Babycare'
 import MakeAppoentment from './MakeAppoentment';
 import Testimonials from './Testimonials';
 import Contactusfeild from './Contactusfeild';
-import Footer from './Footer';
+import Footer from '../Shared/Footer';
 const Home = () => {
     return (
-        <div className='px-12'>
+        <div >
      <Banner></Banner>
             <Info></Info>
                    <Services></Services>
