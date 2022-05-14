@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import auth from '../../firebase.init';
 import Loding from '../Shared/Loding';
 import { Link, useNavigate } from 'react-router-dom';
+// import { sendEmailVerification } from 'firebase/auth';
 const Singup = () => {
 
     const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
@@ -12,7 +13,7 @@ const Singup = () => {
         user,
         loading,
         error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth ,{sendEmailVerification:true});
     const [updateProfile, updating, updateerror] = useUpdateProfile(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate =useNavigate()
@@ -31,6 +32,8 @@ const Singup = () => {
         console.log(user || guser)
     }
 
+  
+
     const onSubmit = async data => {
         console.log(data);
       await  createUserWithEmailAndPassword(data.email, data.password)
@@ -40,7 +43,7 @@ const Singup = () => {
     }
 
     return (
-        <div className='flex h-screen justify-center items-center' >
+        <div className='flex min-h-min	mt-10 justify-center items-center' >
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
                     <h2 className="text-center text-2xl font-bold">Sign Up</h2>
