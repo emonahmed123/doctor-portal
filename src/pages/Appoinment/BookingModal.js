@@ -3,14 +3,13 @@ import { format } from 'date-fns';
 import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import {toast } from 'react-toastify';
-const BookingModal = ({treatment,date ,setTreatment}) => {
+const BookingModal = ({treatment,date ,setTreatment,refetch}) => {
    const {name ,slots,_id}= treatment;
-   const [user, loading] = useAuthState(auth);
+   const [user] =  useAuthState(auth);
    const formateDate =format(date,'PP')
    const handleBooking =event =>{
        event.preventDefault()
        const slot = event.target.slot.value
-   console.log(_id,name,slot)
    const booking={
        treatmentId:_id,
        treatment:name,
@@ -38,6 +37,7 @@ const BookingModal = ({treatment,date ,setTreatment}) => {
  else{
     toast.error(`Already have and Appointment on ${data.booking ?.date} at ${data.booking?.slot}`)
  }
+ refetch()
  setTreatment(null)
    })
   
@@ -58,8 +58,8 @@ const BookingModal = ({treatment,date ,setTreatment}) => {
            
     </select>
 
-       <input type="text" name='name'  disabled  value={user?.displayName||``} placeholder="Your Name"className="input input-bordered w-full max-w-xs" />
-       <input type="email" name=' email' disabled value={user?.email ||``}   placeholder="Email Address"className="input input-bordered w-full max-w-xs" />
+       <input type="text" name='name'  disabled  value={user?.displayName ||``} placeholder="Your Name"className="input input-bordered w-full max-w-xs" />
+       <input type="email" name='email' disabled value={user?.email ||``}   placeholder="Email Address"className="input input-bordered w-full max-w-xs" />
        <input type="text" name='phone' placeholder="Phone Number"className="input input-bordered w-full max-w-xs" />
        <input type="submit"  value="submit"className="btn btn-secondary w-full max-w-xs" />
       
