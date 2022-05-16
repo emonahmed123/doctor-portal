@@ -4,10 +4,11 @@ import { useForm } from "react-hook-form";
 import auth from '../../firebase.init';
 import Loding from '../Shared/Loding';
 import { Link, useNavigate } from 'react-router-dom';
-// import { sendEmailVerification } from 'firebase/auth';
+import useToken from '../../hooks/useToken';
 const Singup = () => {
 
-    const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const [
         createUserWithEmailAndPassword,
         user,
@@ -15,31 +16,34 @@ const Singup = () => {
         error,
     ] = useCreateUserWithEmailAndPassword(auth ,{sendEmailVerification:true});
     const [updateProfile, updating, updateerror] = useUpdateProfile(auth);
-    const { register, formState: { errors }, handleSubmit } = useForm();
-    const navigate =useNavigate()
+ 
+     
+    const [token] = useToken(user || gUser );
+
+    const navigate = useNavigate()
+   
+    let SingerrorMessage;
     
-    
-    let loginerrorMessage;
-    
-    if (loading || gloading || updating) {
+    if (loading || gLoading || updating) {
         return <Loding></Loding>
     }
-    if (error || gerror || updateerror) {
-        loginerrorMessage = <p className='text-red-500'>{error?.message}|| {gerror.message}|| {updateerror.message}</p>
+    if (error || gError || updateerror) {
+        SingerrorMessage = <p className='text-red-500'>{error?.message} || {gError?.message}|| {updateerror?.message}</p>
     }
 
-    if (user || guser) {
-        console.log(user || guser)
+    if (token) {
+        // console.log(user || guser)
+      navigate('/appointment')
     }
 
   
 
     const onSubmit = async data => {
         console.log(data);
-      await  createUserWithEmailAndPassword(data.email, data.password)
+        await  createUserWithEmailAndPassword(data.email, data.password)
         await updateProfile({ displayName:data.name});
-        console.log('upadate done')
-        navigate('/appointment')
+    
+        // navigate('/appointment')
     }
 
     return (
@@ -128,10 +132,10 @@ const Singup = () => {
                         <input className='btn w-full max-w-xs' type="submit" value='SIGN UP' />
                     </form>
                     <p> <small>Already have an account ? <Link className='text-primary' to="/login">Please Login</Link>  </small> </p>
-                    {loginerrorMessage}
+                    {SingerrorMessage}
 
                     <div className="divider">OR</div>
-                    <button onClick={() => signInWithGoogle()}className="btn btn-outline">  CONTINUE WITH GOOGLE  </button>
+                    <button onClick={() => signInWithGoogle()} className="btn btn-outline" >  CONTINUE WITH GOOGLE  </button>
                   </div>
             </div>
 

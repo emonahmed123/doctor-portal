@@ -1,45 +1,51 @@
 import React, { useEffect } from 'react';
 import { useSignInWithGoogle, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth'
-// import { useform } from "react-hook-form";
 import { useForm } from 'react-hook-form';
 import auth from '../../firebase.init';
 import Loding from '../Shared/Loding';
-import { Link, useNavigate } from 'react-router-dom';
-import { Navigate ,  useLocation,} from 'react-router-dom';
-const Login = () => {
-    const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
+import { Link, useNavigate , useLocation } from 'react-router-dom';
+import useToken from '../../hooks/useToken';
+
+ const Login = () => {
+    const [signInWithGoogle, gUser, gLoading, gError] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm( );
-   
     const [
         signInWithEmailAndPassword,
         user,
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
-    const location =useLocation();   
-   const navigate =useNavigate()
-    let from = location.state?.from?.pathname || "/ ";
+    const [token] = useToken (user || gUser)
+ 
     let loginerrorMessage;
-   useEffect(()=>{
-    if (user || guser) {
-        console.log(user || guser)
-        navigate(from, { replace: true });
-        
+   
+   const navigate =useNavigate( )
+   const location =useLocation();   
+   
+   let from = location.state?.from?.pathname || " / ";
+   
+   useEffect ( () =>{
+    if(token){
+        navigate( from , {replace:true});
     }
+   },[token, from ,navigate]);
+ 
 
-   },[user,guser, from, navigate])
-
-
-    if (loading || gloading) {
+    if (loading || gLoading) {
         return <Loding></Loding>
     }
-    if (error ||  gerror) {
-        loginerrorMessage = <p className='text-red-500' >{error?.message}|| {gerror?.message}</p>
+  
+
+    
+    if (error ||  gError) {
+        loginerrorMessage = <p className='text-red-500' >{error?.message}|| {gError?.message}</p>
     }
+ 
+    
 
 
     const onSubmit = data => {
-        console.log(data);
+        // console.log(data);
         signInWithEmailAndPassword(data.email ,data.password)
 
     }

@@ -22,6 +22,7 @@ function App() {
         <Route path="/home" element={<Home></Home>}  />
         <Route path="/about" element={<About></About>}  />
         <Route path="/login" element={<Login></Login>}  />
+     
         <Route path="/appointment" element={
           <RequireAuth>
             <Appoinment></Appoinment>
@@ -36,6 +37,8 @@ function App() {
             <Route path='review' element={<Myreview></Myreview>}></Route>
 
         </Route>
+
+
         <Route path="/sigup" element={<Singup></Singup>}  />
       </Routes>
       <ToastContainer />

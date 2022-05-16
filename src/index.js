@@ -18,7 +18,7 @@ root.render(
 <App />
 </BrowserRouter>
 </QueryClientProvider>
-  </React.StrictMode>
+ </React.StrictMode>
 
 
 
