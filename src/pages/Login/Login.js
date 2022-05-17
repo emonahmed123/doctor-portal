@@ -15,20 +15,20 @@ import useToken from '../../hooks/useToken';
         loading,
         error,
     ] = useSignInWithEmailAndPassword(auth);
-    const [token] = useToken (user || gUser)
- 
+    const [token] = useToken (user || gUser );
     let loginerrorMessage;
    
-   const navigate =useNavigate( )
+   const navigate =useNavigate()
    const location =useLocation();   
    
    let from = location.state?.from?.pathname || " / ";
-   
+
+
    useEffect ( () =>{
     if(token){
-        navigate( from , {replace:true});
+        navigate(from,{replace:true});
     }
-   },[token, from ,navigate]);
+   },[token,from,navigate]);
  
 
     if (loading || gLoading) {

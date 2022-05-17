@@ -3,24 +3,29 @@ import {useAuthState} from 'react-firebase-hooks/auth'
 import auth from '../../firebase.init';
 const MyAppoinment = () => {
     const [user] = useAuthState(auth)
-    const [appointment, setAppointment] =useState([ ]);
-     useEffect(()=>{
-             if(user){
-                fetch(`http://localhost:5000/booking?patient=${user.email}`,{
-                  method: 'GET',
-                  headers:{
-                    'authorization': `Bearer ${localStorage.getItem('accessToken')}`
-                  }
-                })
-                .then(res =>res.json())
-                .then(data=>setAppointment(data))
-           
+    const [appointments, setAppointments] = useState([]);
+    console.log(appointments)
+    useEffect(() => {
+      if (user) {
+          fetch(`http://localhost:5000/booking?patient=${user.email}`, {
+              method: 'GET',
+              headers: {
+                  'authorization': `Bearer ${localStorage.getItem('accessToken')}`
               }
-              console.log(appointment)
-     },[user])
+          })
+              .then(res=>res.json())
+             
+            
+              .then(data =>setAppointments(data));
+        
+      }
+  
+  }, [user])
+  
+  
     return (
         <div>
-        <h1> my :{appointment.length}</h1>
+        <h1> my :{appointments.length }</h1>
          
         <div class="overflow-x-auto">
   <table class="table w-full">
@@ -34,10 +39,11 @@ const MyAppoinment = () => {
         <th>Treatment</th>
       </tr>
     </thead>
+  
     <tbody>
 
    {
-       appointment.map((a, index) =>      <tr>
+       appointments.map((a,index)=><tr>
                      <th>{index+1}</th>
         <th>{a.patientName}</th>
         <td>{a.date}</td>

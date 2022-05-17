@@ -2,11 +2,13 @@ import {useState,useEffect}from 'react'
 
 
 const useToken = user =>{
-const [token , setToken] =useState(' ');
-
+const [token , setToken] =useState('');
+console.log(user)
+console.log(token)
 useEffect(()=>{
 // console.log('user insdie in token',user )
  const email =user?.user?.email;
+ console.log(email)
  const currentUser ={email:email};
  if(email){
      fetch(`http://localhost:5000/user/${email}`,{
@@ -18,9 +20,10 @@ useEffect(()=>{
      })
      .then(res=>res.json())
      .then(data=>{
-         console.log(' console useToken', data)
+      
         const accessToken =data.token;
-         localStorage.setItem('accessToken', accessToken)
+      console.log(accessToken)
+        localStorage.setItem('accessToken', accessToken)
          setToken(accessToken)
      })
 
