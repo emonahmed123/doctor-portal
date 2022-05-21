@@ -8,10 +8,10 @@ console.log(token)
 useEffect(()=>{
 // console.log('user insdie in token',user )
  const email =user?.user?.email;
- console.log(email)
+//  console.log(email)
  const currentUser ={email:email};
  if(email){
-     fetch(`http://localhost:5000/user/${email}`,{
+     fetch(`https://evening-inlet-94769.herokuapp.com/user/${email}`,{
          method:'PUT',
          headers:{
              'content-type': 'application/json'

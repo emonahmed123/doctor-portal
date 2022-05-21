@@ -9,7 +9,7 @@ const AvailableAppointments = ({date}) => {
   // const [services , setServices] =useState( [ ]);
   const [ treatment, setTreatment] =useState(null)
 const formateDate =format(date,'PP')
-  const{data:services, isLoading,refetch} =useQuery(['available',formateDate], ()=>fetch(`http://localhost:5000/available?date=${formateDate}`)
+  const{data:services, isLoading,refetch} =useQuery(['available',formateDate], ()=>fetch(`https://evening-inlet-94769.herokuapp.com/available?date=${formateDate}`)
   .then(res=>res.json( ))
    )
 
@@ -19,7 +19,7 @@ const formateDate =format(date,'PP')
   }
   
   // useEffect(()=>{
-  //        fetch(`http://localhost:5000/available?date=${formateDate}`)
+  //        fetch(`https://evening-inlet-94769.herokuapp.com/available?date=${formateDate}`)
   //        .then(res=>res.json())
   //        .then(data =>setServices(data))
 

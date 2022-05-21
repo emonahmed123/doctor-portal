@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import Navber from './pages/Shared/Navber';
 import { Routes, Route, Link } from "react-router-dom";
@@ -13,6 +12,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './pages/Dashboard/Dashboard';
 import MyAppoinment from './pages/Dashboard/MyAppoinment';
 import Myreview from './pages/Dashboard/Myreview';
+import User from './pages/Dashboard/User';
+import RequireAdmin from './pages/Login/RequireAdmin';
+import Adddoctor from './pages/Dashboard/Adddoctor';
+import MangeDoctor from './pages/Dashboard/MangeDoctor';
+import Payment from './pages/Dashboard/Payment';
 function App() {
   return (
     <div className=' max-w-7xl mx-auto px-20'>
@@ -35,6 +39,16 @@ function App() {
         }  >
             <Route index element={<MyAppoinment></MyAppoinment>}></Route>
             <Route path='review' element={<Myreview></Myreview>}></Route>
+            <Route path='payment/:id' element={<Payment></Payment>}></Route>
+            <Route path='user' element={<RequireAdmin><User></User>
+
+            </RequireAdmin>}></Route>
+            <Route path='adddoctor' element={<RequireAdmin><Adddoctor></Adddoctor>
+
+            </RequireAdmin>}></Route>
+            <Route path='mangedoctor' element={<RequireAdmin><MangeDoctor></MangeDoctor>
+
+            </RequireAdmin>}></Route>
 
         </Route>
 
